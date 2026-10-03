@@ -672,6 +672,10 @@ abstract final class Pref {
   static bool get autoPlayEnable =>
       _setting.get(SettingBoxKey.autoPlayEnable, defaultValue: false);
 
+  /// 无限试用会员画质：走 APP 端 PlayViewUnite 接口并携带 is_need_trial
+  static bool get trialVipQuality =>
+      _setting.get(SettingBoxKey.trialVipQuality, defaultValue: false);
+
   static bool get pipNoDanmaku =>
       _setting.get(SettingBoxKey.pipNoDanmaku, defaultValue: false);
 

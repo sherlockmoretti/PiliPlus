@@ -83,6 +83,13 @@ List<SettingsModel> get videoSettings => [
     defaultVal: false,
     onChanged: (value) => VideoUtils.disableAudioCDN = value,
   ),
+  const SwitchModel(
+    title: '无限试用会员画质',
+    subtitle: '经官方画质试看接口请求会员画质，能否试用由官方接口决定，失败自动回退',
+    leading: Icon(Icons.auto_awesome),
+    setKey: SettingBoxKey.trialVipQuality,
+    defaultVal: false,
+  ),
   NormalModel(
     title: '默认画质',
     leading: const Icon(Icons.video_settings_outlined),

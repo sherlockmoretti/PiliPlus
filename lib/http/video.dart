@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:PiliPlus/common/constants.dart';
+import 'package:PiliPlus/grpc/player_unite.dart';
 import 'package:PiliPlus/grpc/bilibili/main/community/reply/v1.pb.dart'
     show ReplyInfo;
 import 'package:PiliPlus/http/api.dart';
@@ -210,6 +211,19 @@ abstract final class VideoHttp {
     String? language,
     bool voiceBalance = false,
   }) async {
+    // 画质试看（is_need_trial）：优先走 APP 端统一播放接口，失败回退下方 REST 逻辑
+    if (Pref.trialVipQuality) {
+      final uniteRes = await PlayerUnite.playViewUnite(
+        aid: avid,
+        bvid: bvid,
+        cid: cid,
+        epid: epid is int ? epid : null,
+        qn: qn,
+      );
+      if (uniteRes is Success<PlayUrlModel>) {
+        return uniteRes;
+      }
+    }
     final dmImgStr = Utils.base64EncodeRandomString(16, 64);
     final dmCoverImgStr = Utils.base64EncodeRandomString(32, 128);
     final params = await WbiSign.makSign({
