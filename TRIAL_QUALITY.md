@@ -58,8 +58,13 @@ gh workflow run build.yml --repo sherlockmoretti/PiliPlus --ref trial-quality -f
 ./sync_upstream.sh
 ```
 
-脚本会自动：同步上游 → rebase 本功能分支 → 推送 → 触发云端构建。
+脚本会自动：同步上游 → rebase 本功能分支 → 推送 → 触发云端构建（带时间戳 tag，
+构建完成后在 [Releases](https://github.com/sherlockmoretti/PiliPlus/releases) 页面
+直接下载完整可安装的 APK）。
 rebase 冲突时脚本会停下提示，解决后继续即可。
+
+> 注意：Actions 的 Artifacts 里下载到的 Android 产物是"散装"的（上游 workflow 用
+> `upload-artifact@v7 archive:false` 上传，会把 APK 内容解开），请从 Release 下载 APK。
 
 ## 实现原理学习资料
 

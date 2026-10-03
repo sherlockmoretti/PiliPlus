@@ -38,9 +38,10 @@ echo "==> 4/5 推送到 fork..."
 git push origin main
 git push --force-with-lease origin "$BRANCH"
 
-echo "==> 5/5 触发 GitHub Actions 构建 Android APK..."
-gh workflow run build.yml --repo "$FORK" --ref "$BRANCH" -f build_android=true
+echo "==> 5/5 触发 GitHub Actions 构建 Android APK（发布到 Release，附完整可安装 APK）..."
+TAG="trial-quality-$(date +%Y%m%d-%H%M)"
+gh workflow run build.yml --repo "$FORK" --ref "$BRANCH" -f build_android=true -f tag="$TAG"
 
 echo ""
 echo "完成。构建进度：https://github.com/${FORK}/actions"
-echo "APK 产物在 Actions 构建页的 Artifacts 里下载。"
+echo "构建成功后，完整 APK 在 Release 页面：https://github.com/${FORK}/releases/tag/${TAG}"
